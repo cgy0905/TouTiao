@@ -5,5 +5,5 @@ package com.cgy.news.model.event;
  * @description
  * @date 2019/5/8 18:30
  */
-class TabRefreshCompletedEvent {
+public class TabRefreshCompletedEvent {
 }

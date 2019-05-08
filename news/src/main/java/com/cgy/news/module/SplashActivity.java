@@ -1,13 +1,38 @@
 package com.cgy.news.module;
 
-import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
+import android.content.Intent;
 
-public class SplashActivity extends AppCompatActivity {
+import com.cgy.news.module.main.view.MainActivity;
+import com.cgy.news.R;
+import com.cgy.news.base.BaseActivity;
+import com.cgy.news.base.BasePresenter;
+import com.cgy.news.utils.UIUtils;
+import com.chaychan.uikit.statusbar.Eyes;
+
+public class SplashActivity extends BaseActivity {
+
 
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_splash);
+    protected BasePresenter createPresenter() {
+        return null;
+    }
+
+    @Override
+    public boolean enableSlideClose() {
+        return false;
+    }
+
+    @Override
+    protected int provideContentViewId() {
+        return R.layout.activity_splash;
+    }
+
+    @Override
+    public void initView() {
+        Eyes.translucentStatusBar(this, false);
+        UIUtils.postTaskDelay(() -> {
+            startActivity(new Intent(SplashActivity.this, MainActivity.class));
+            finish();
+        }, 2000);
     }
 }
