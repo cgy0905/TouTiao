@@ -1,4 +1,4 @@
-package com.cgy.news.module.main.view;
+package com.cgy.news.module.main;
 
 import android.view.animation.Animation;
 

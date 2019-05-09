@@ -46,7 +46,7 @@ public class ItemDragHelperCallBack extends ItemTouchHelper.Callback {
 
     @Override
     public boolean isLongPressDragEnabled() {
-        //不需要长按拖动，因为我们的标题和 频道推荐 是不需要拖动的，所以手动控制
+        //不需要长按拖动，因为我的频道和 频道推荐 是不需要拖动的，所以手动控制
         return false;
     }
 

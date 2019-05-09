@@ -74,9 +74,9 @@ public class HomeFragment extends BaseFragment implements OnChannelListener {
      */
     private void initChannelData() {
         String selectedChannelJson = PreUtils.getString(Constant.SELECTED_CHANNEL_JSON, "");
-        String unselectChannel = PreUtils.getString(Constant.UNSELECTED_CHANNEL_JSON, "");
+        String unselectedChannelJson = PreUtils.getString(Constant.UNSELECTED_CHANNEL_JSON, "");
 
-        if (TextUtils.isEmpty(selectedChannelJson) || TextUtils.isEmpty(unselectChannel)) {
+        if (TextUtils.isEmpty(selectedChannelJson) || TextUtils.isEmpty(unselectedChannelJson)) {
             //本地没有title
             String[] channels = getResources().getStringArray(R.array.channel);
             String[] channelCodes = getResources().getStringArray(R.array.channel_code);
@@ -94,7 +94,7 @@ public class HomeFragment extends BaseFragment implements OnChannelListener {
             //之前添加过
             List<Channel> selectedChannel = mGson.fromJson(selectedChannelJson, new TypeToken<List<Channel>>() {
             }.getType());
-            List<Channel> unselectedChannel = mGson.fromJson(unselectChannel, new TypeToken<List<Channel>>() {
+            List<Channel> unselectedChannel = mGson.fromJson(unselectedChannelJson, new TypeToken<List<Channel>>() {
             }.getType());
             mSelectedChannels.addAll(selectedChannel);
             mUnSelectedChannels.addAll(unselectedChannel);

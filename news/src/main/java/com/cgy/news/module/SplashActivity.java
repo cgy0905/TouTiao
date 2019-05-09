@@ -2,7 +2,7 @@ package com.cgy.news.module;
 
 import android.content.Intent;
 
-import com.cgy.news.module.main.view.MainActivity;
+import com.cgy.news.module.main.MainActivity;
 import com.cgy.news.R;
 import com.cgy.news.base.BaseActivity;
 import com.cgy.news.base.BasePresenter;

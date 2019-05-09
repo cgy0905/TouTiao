@@ -9,7 +9,7 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 
-import com.cgy.news.module.main.view.MainActivity;
+import com.cgy.news.module.main.MainActivity;
 import com.cgy.news.listener.PermissionListener;
 import com.cgy.news.utils.UIUtils;
 import com.github.anzewei.parallaxbacklayout.ParallaxHelper;

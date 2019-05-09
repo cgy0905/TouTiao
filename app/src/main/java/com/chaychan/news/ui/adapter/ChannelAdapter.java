@@ -195,12 +195,12 @@ public class ChannelAdapter extends BaseMultiItemQuickAdapter<Channel,BaseViewHo
 
 
                                     // 推荐频道 移动到 我的频道的最后一个
-                                    channel.setItemType(Channel.TYPE_MY_CHANNEL);//改为推荐频道类型
+                                    channel.setItemType(Channel.TYPE_MY_CHANNEL);//改为我的频道类型
                                     if (onChannelDragListener != null)
                                         onChannelDragListener.onMoveToMyChannel(currentPosition, myLastPosition + 1);
                                     startAnimation(currentView, targetX, targetY);
                                 } else {
-                                    channel.setItemType(Channel.TYPE_MY_CHANNEL);//改为推荐频道类型
+                                    channel.setItemType(Channel.TYPE_MY_CHANNEL);//改为我的频道类型
                                     if (myLastPosition == -1) myLastPosition = 0;//我的频道没有了，改成0
                                     if (onChannelDragListener != null)
                                         onChannelDragListener.onMoveToMyChannel(currentPosition, myLastPosition + 1);
