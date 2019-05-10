@@ -2,7 +2,7 @@ package com.cgy.news.api;
 
 import android.text.TextUtils;
 
-import com.cgy.news.model.ResultResponse;
+import com.cgy.news.model.response.ResultResponse;
 import com.cgy.news.utils.UIUtils;
 import com.socks.library.KLog;
 

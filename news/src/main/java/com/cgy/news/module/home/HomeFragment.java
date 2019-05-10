@@ -15,7 +15,7 @@ import com.cgy.news.listener.OnChannelListener;
 import com.cgy.news.model.entity.Channel;
 import com.cgy.news.module.home.channel.ChannelDialogFragment;
 import com.cgy.news.module.news.NewsListFragment;
-import com.cgy.news.module.news.adapter.ChannelPagerAdapter;
+import com.cgy.news.module.home.channel.adapter.ChannelPagerAdapter;
 import com.cgy.news.utils.PreUtils;
 import com.cgy.news.utils.UIUtils;
 import com.google.gson.Gson;

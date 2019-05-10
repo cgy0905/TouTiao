@@ -1,4 +1,4 @@
-package com.cgy.news.model;
+package com.cgy.news.model.response;
 
 /**
  * @author cgy
