@@ -6,7 +6,7 @@ import com.chaychan.news.model.response.NewsResponse;
 import com.chaychan.news.base.BasePresenter;
 import com.chaychan.news.utils.ListUtils;
 import com.chaychan.news.utils.PreUtils;
-import com.chaychan.news.presenter.view.lNewsListView;
+import com.chaychan.news.presenter.view.INewsListView;
 import com.google.gson.Gson;
 import com.socks.library.KLog;
 
@@ -21,11 +21,11 @@ import rx.Subscriber;
  * @date 2017/6/18  10:04
  */
 
-public class NewsListPresenter extends BasePresenter<lNewsListView> {
+public class NewsListPresenter extends BasePresenter<INewsListView> {
 
     private long lastTime;
 
-    public NewsListPresenter(lNewsListView view) {
+    public NewsListPresenter(INewsListView view) {
         super(view);
     }
 

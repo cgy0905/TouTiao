@@ -3,11 +3,10 @@ package com.cgy.news.module.video;
 import android.os.Bundle;
 
 import com.cgy.news.R;
-import com.cgy.news.module.news.NewsDetailBaseActivity;
+import com.cgy.news.module.news.activity.NewsDetailBaseActivity;
 
 public class VideoDetailActivity extends NewsDetailBaseActivity {
 
-    public static final String PROGRESS = "progress";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

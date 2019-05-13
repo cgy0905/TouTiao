@@ -30,7 +30,7 @@
             android:singleLine="true"
             android:text="123"
             android:textColor="@color/color_406599"
-            android:textSize="15.0sp" />
+            android:textSize="15sp" />
 
         <View
             android:layout_width="0dp"
@@ -54,15 +54,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="45dp"
-        android:layout_marginTop="-2.0dip"
+        android:layout_marginTop="-2dp"
         android:layout_marginRight="10dp"
         android:ellipsize="end"
         android:includeFontPadding="false"
-        android:lineSpacingExtra="6.0dip"
+        android:lineSpacingExtra="6dp"
         android:maxLines="8"
         android:textColor="@color/color_505050"
-        android:textSize="16.0sp" />
-
+        android:textSize="16sp" />
 
     <TextView
         android:id="@+id/tv_time"
@@ -73,4 +72,5 @@
         android:text="7小时前"
         android:textColor="@color/color_505050"
         android:textSize="12sp" />
+
 </LinearLayout>

@@ -107,22 +107,19 @@ public class VideoListAdapter extends BaseQuickAdapter<News, BaseViewHolder> {
                     @Override
                     public void onSuccess(String url) {
                         KLog.i("Video url:" + url);
-                        UIUtils.postTaskSafely(new Runnable() {
-                            @Override
-                            public void run() {
-                                //更改视频是否在解析的标识
-                                isVideoParsing = false;
+                        UIUtils.postTaskSafely(() -> {
+                            //更改视频是否在解析的标识
+                            isVideoParsing = false;
 
-                                //准备播放
-                                videoPlayer.setUp(url, news.title, JzvdStd.SCREEN_WINDOW_LIST);
+                            //准备播放
+                            videoPlayer.setUp(url, news.title, JzvdStd.SCREEN_WINDOW_LIST);
 
-                                if (news.video_detail_info != null) {
-                                    news.video_detail_info.parse_video_url = url;//赋值解析后的视频地址
-                                    videoPlayer.seekToInAdvance = news.video_detail_info.progress;//设置播放进度
-                                }
-                                //开始播放
-                                videoPlayer.startVideo();
+                            if (news.video_detail_info != null) {
+                                news.video_detail_info.parse_video_url = url;//赋值解析后的视频地址
+                                videoPlayer.seekToInAdvance = news.video_detail_info.progress;//设置播放进度
                             }
+                            //开始播放
+                            videoPlayer.startVideo();
                         });
                     }
 

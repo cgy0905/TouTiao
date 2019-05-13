@@ -34,7 +34,7 @@ public class VideoEntity {
     public int video_watching_count;
     public int video_watch_count;
     public List<?> video_url;
-    //自己新增的字段，记录视频播放的进度，用于同步视频列表也和详情页的进度
+    //自己新增的字段，记录视频播放的进度，用于同步视频列表页和详情页的进度
     public long progress;
     public String parse_video_url; //解析出来的视频地址
 }

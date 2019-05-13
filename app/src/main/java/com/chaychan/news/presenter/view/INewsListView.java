@@ -10,7 +10,7 @@ import java.util.List;
  * @date 2017/6/18  9:33
  */
 
-public interface lNewsListView {
+public interface INewsListView {
 
     void onGetNewsListSuccess(List<News> newList,String tipInfo);
 

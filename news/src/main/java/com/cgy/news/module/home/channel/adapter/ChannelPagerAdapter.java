@@ -7,7 +7,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
 import com.cgy.news.model.entity.Channel;
-import com.cgy.news.module.news.NewsListFragment;
+import com.cgy.news.module.news.fragment.NewsListFragment;
 
 import java.util.ArrayList;
 import java.util.List;

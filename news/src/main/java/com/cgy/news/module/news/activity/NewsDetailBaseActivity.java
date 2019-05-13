@@ -1,4 +1,4 @@
-package com.chaychan.news.ui.activity;
+package com.cgy.news.module.news.activity;
 
 import android.content.Intent;
 import android.support.v7.widget.LinearLayoutManager;
@@ -7,18 +7,18 @@ import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.cgy.news.R;
+import com.cgy.news.base.BaseActivity;
+import com.cgy.news.constants.Constant;
+import com.cgy.news.model.entity.CommentData;
+import com.cgy.news.model.event.DetailCloseEvent;
+import com.cgy.news.model.response.CommentResponse;
+import com.cgy.news.module.news.INewsDetailView;
+import com.cgy.news.module.news.NewsDetailPresenter;
+import com.cgy.news.module.news.adapter.CommentAdapter;
+import com.cgy.news.utils.ListUtils;
+import com.cgy.news.widget.NewsDetailHeaderView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
-import com.chaychan.news.R;
-import com.chaychan.news.constants.Constant;
-import com.chaychan.news.model.entity.CommentData;
-import com.chaychan.news.model.event.DetailCloseEvent;
-import com.chaychan.news.model.response.CommentResponse;
-import com.chaychan.news.ui.adapter.CommentAdapter;
-import com.chaychan.news.base.BaseActivity;
-import com.chaychan.news.presenter.NewsDetailPresenter;
-import com.chaychan.news.ui.widget.NewsDetailHeaderView;
-import com.chaychan.news.utils.ListUtils;
-import com.chaychan.news.presenter.view.INewsDetailView;
 import com.chaychan.uikit.powerfulrecyclerview.PowerfulRecyclerView;
 import com.github.nukc.stateview.StateView;
 
@@ -27,17 +27,16 @@ import org.greenrobot.eventbus.EventBus;
 import java.util.ArrayList;
 import java.util.List;
 
-import butterknife.Bind;
+import butterknife.BindView;
 import butterknife.OnClick;
 import cn.jzvd.JZMediaManager;
 import cn.jzvd.JzvdMgr;
 
 /**
- * @author ChayChan
- * @description: 新闻详情页的基类
- * @date 2017/7/4  15:59
+ * @author cgy
+ * @description
+ * @date 2019/5/10 10:16
  */
-
 public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPresenter> implements INewsDetailView, BaseQuickAdapter.RequestLoadMoreListener {
 
     public static final String CHANNEL_CODE = "channelCode";
@@ -48,17 +47,17 @@ public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPres
     public static final String GROUP_ID = "groupId";
     public static final String ITEM_ID = "itemId";
 
-    @Bind(R.id.fl_content)
+    @BindView(R.id.fl_content)
     FrameLayout mFlContent;
 
-    @Bind(R.id.rv_comment)
+    @BindView(R.id.rv_comment)
     PowerfulRecyclerView mRvComment;
 
-    @Bind(R.id.tv_comment_count)
+    @BindView(R.id.tv_comment_count)
     TextView mTvCommentCount;
 
     private List<CommentData> mCommentList = new ArrayList<>();
-    protected StateView mStateView;
+    protected  StateView mStateView;
     private CommentAdapter mCommentAdapter;
     protected NewsDetailHeaderView mHeaderView;
     private String mDetailUrl;
@@ -123,28 +122,20 @@ public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPres
         mCommentAdapter.setEmptyView(R.layout.pager_no_comment);
         mCommentAdapter.setHeaderAndEmpty(true);
 
-        mStateView.setOnRetryClickListener(new StateView.OnRetryClickListener() {
-            @Override
-            public void onRetryClick() {
-                loadCommentData();
-            }
-        });
+        mStateView.setOnRetryClickListener(() -> loadCommentData());
     }
-
 
     @Override
     public void onGetCommentSuccess(CommentResponse response) {
-
         mCommentResponse = response;
-
-        if (ListUtils.isEmpty(response.data)){
+        if (ListUtils.isEmpty(response.data)) {
             //没有评论了
             mCommentAdapter.loadMoreEnd();
             return;
         }
 
         if (response.total_number > 0) {
-            //如果评论数大于0，显示红点
+            //如果评论数大于0,显示红点
             mTvCommentCount.setVisibility(View.VISIBLE);
             mTvCommentCount.setText(String.valueOf(response.total_number));
         }
@@ -154,19 +145,17 @@ public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPres
 
         if (!response.has_more) {
             mCommentAdapter.loadMoreEnd();
-        }else{
+        } else {
             mCommentAdapter.loadMoreComplete();
         }
     }
-
 
     @Override
     public void onError() {
         mStateView.showRetry();
     }
 
-
-    @OnClick({R.id.fl_comment_icon})
+    @OnClick(R.id.fl_comment_icon)
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.fl_comment_icon:
@@ -177,10 +166,10 @@ public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPres
                     int firstPosition = linearManager.findFirstVisibleItemPosition();
                     int last = linearManager.findLastVisibleItemPosition();
                     if (firstPosition == 0 && last == 0) {
-                        //处于头部，滚动到第一个条目
+                        //处于头部,滚动到第一个条目
                         mRvComment.scrollToPosition(1);
                     } else {
-                        //不是头部，滚动到头部
+                        //不是头部,滚动到头部
                         mRvComment.scrollToPosition(0);
                     }
                 }
@@ -193,20 +182,19 @@ public abstract class NewsDetailBaseActivity extends BaseActivity<NewsDetailPres
         mPresenter.getComment(mGroupId, mItemId, mCommentList.size() / Constant.COMMENT_PAGE_SIZE + 1);
     }
 
-
     /**
-     *  发送事件，用于更新上个页面的播放进度以及评论数
+     * 发送事件,用于更新上个页面的播放进度以及评论数
      */
     protected void postVideoEvent(boolean isVideoDetail) {
         DetailCloseEvent event = new DetailCloseEvent();
         event.setChannelCode(mChannelCode);
         event.setPosition(mPosition);
 
-        if (mCommentResponse != null){
+        if (mCommentResponse != null) {
             event.setCommentCount(mCommentResponse.total_number);
         }
 
-        if (isVideoDetail && JZMediaManager.instance() != null && JzvdMgr.getCurrentJzvd() != null){
+        if (isVideoDetail && JZMediaManager.instance() != null && JzvdMgr.getCurrentJzvd() != null) {
             //如果是视频详情
             long progress = JZMediaManager.instance().getCurrentPosition();
             event.setProgress(progress);
