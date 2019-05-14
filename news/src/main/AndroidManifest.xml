@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".module.news.activity.ImageViewPagerActivity"></activity>
+
         <activity
             android:name=".module.SplashActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
@@ -26,14 +26,29 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <activity
             android:name=".module.main.MainActivity"
             android:configChanges="keyboardHidden|screenSize|orientation"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme" />
-        <activity android:name=".module.news.activity.NewsDetailActivity" />
-        <activity android:name=".module.main.WebViewActivity" />
-        <activity android:name=".module.video.VideoDetailActivity" />
+        <activity
+            android:name=".module.news.activity.NewsDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.main.WebViewActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".module.video.VideoDetailActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name=".module.news.activity.ImageViewPagerActivity"
+            android:configChanges="keyboardHidden|screenSize|orientation"
+            android:screenOrientation="portrait" />
     </application>
 
 </manifest>

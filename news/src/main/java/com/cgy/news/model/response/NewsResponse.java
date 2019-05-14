@@ -2,6 +2,7 @@ package com.cgy.news.model.response;
 
 import com.cgy.news.model.entity.NewsData;
 import com.cgy.news.model.entity.TipEntity;
+import com.google.gson.Gson;
 
 import java.util.List;
 
@@ -35,4 +36,9 @@ public class NewsResponse {
     public boolean has_more_to_refresh;
     public TipEntity tips;
     public List<NewsData> data;
+
+    @Override
+    public String toString() {
+        return new Gson().toJson(this);
+    }
 }

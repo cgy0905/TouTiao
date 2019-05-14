@@ -3,7 +3,6 @@ package com.cgy.news.base;
 import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -34,15 +33,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends LazyLoadFrag
         mPresenter = createPresenter();
     }
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         if (rootView == null) {
-            rootView = inflater.inflate(provideContentViewId(), container, false);
+            rootView = inflater.inflate(provideContentViewId(),container,false);
             ButterKnife.bind(this, rootView);
 
             mStateView = StateView.inject(getStateViewRoot());
-            if (mStateView != null) {
+            if (mStateView != null){
                 mStateView.setLoadingResource(R.layout.page_loading);
                 mStateView.setRetryResource(R.layout.page_net_error);
             }

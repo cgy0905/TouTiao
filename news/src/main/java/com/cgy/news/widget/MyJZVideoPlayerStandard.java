@@ -1,4 +1,4 @@
-package com.cgy.news.utils;
+package com.cgy.news.widget;
 
 import android.content.Context;
 import android.util.AttributeSet;

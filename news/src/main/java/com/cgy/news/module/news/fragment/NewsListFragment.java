@@ -29,7 +29,7 @@ import com.cgy.news.module.news.adapter.NewsListAdapter;
 import com.cgy.news.module.news.adapter.VideoListAdapter;
 import com.cgy.news.module.video.VideoDetailActivity;
 import com.cgy.news.utils.ListUtils;
-import com.cgy.news.utils.MyJZVideoPlayerStandard;
+import com.cgy.news.widget.MyJZVideoPlayerStandard;
 import com.cgy.news.utils.NetWorkUtils;
 import com.cgy.news.utils.NewsRecordHelper;
 import com.cgy.news.utils.UIUtils;
@@ -122,6 +122,10 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
         refreshViewHolder.setPullDownRefreshText(UIUtils.getString(R.string.refresh_pull_down_text));//下拉的提示文字
         refreshViewHolder.setReleaseRefreshText(UIUtils.getString(R.string.refresh_release_text));//松开的提示文字
         refreshViewHolder.setRefreshingText(UIUtils.getString(R.string.refresh_ing_text));//刷新中的提示文字
+
+        //设置下拉刷新和上拉加载更多的风格
+        mRefreshLayout.setRefreshViewHolder(refreshViewHolder);
+        mRefreshLayout.shouldHandleRecyclerViewLoadingMore(mRvNews);
     }
 
     @Override

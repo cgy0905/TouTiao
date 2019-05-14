@@ -129,6 +129,12 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     @Override
     protected void onPause() {
         super.onPause();
+        mCurrentActivity = null;
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
 
         //销毁的时候从集合中移除
         synchronized (mActivities) {
@@ -138,6 +144,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
         if (mPresenter != null) {
             mPresenter.detachView();
         }
+
     }
 
     /**
@@ -150,6 +157,10 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
             Activity next = iterator.next();
             next.finish();
         }
+    }
+
+    public static Activity getCurrentActivity() {
+        return mCurrentActivity;
     }
 
     /**
@@ -189,7 +200,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     public void requestRuntimePermission(String[] permissions, PermissionListener permissionListener) {
         mPermissionListener = permissionListener;
         List<String> permissionList = new ArrayList<>();
-        for (String permission : permissionList) {
+        for (String permission : permissions) {
             if (ContextCompat.checkSelfPermission(this, permission) != PackageManager.PERMISSION_GRANTED) {
                 permissionList.add(permission);
             }

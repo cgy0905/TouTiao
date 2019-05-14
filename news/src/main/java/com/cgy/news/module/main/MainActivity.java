@@ -76,33 +76,31 @@ public class MainActivity extends BaseActivity {
         mVpContent.setOffscreenPageLimit(mFragments.size());
         mBottomBarLayout.setViewPager(mVpContent);
         //设置条目点击的监听
-        mBottomBarLayout.setOnItemSelectedListener(new BottomBarLayout.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(BottomBarItem bottomBarItem, int position) {
-                setStatusBarColor(position);//设置状态栏颜色
+        mBottomBarLayout.setOnItemSelectedListener((bottomBarItem, position) -> {
+            setStatusBarColor(position);//设置状态栏颜色
 
-                Jzvd.releaseAllVideos();//底部页签切换或者是下拉刷新, 释放资源
+            Jzvd.releaseAllVideos();//底部页签切换或者是下拉刷新, 释放资源
 
-                if (position == 0 || position == 1) {
-                    if (mBottomBarLayout.getCurrentItem() == position) {
-                        //如果点击的是首页
-                        String channelCode = "";
-                        if (position == 0) {
-                            channelCode = ((HomeFragment)mFragments.get(0)).getCurrentChannelCode();//获取到首页当前显示的fragment的频道
-                        } else {
-                            channelCode = ((VideoFragment)mFragments.get(1)).getCurrentChannelCode();//获取到视频当前显示的fragment的频道
-                        }
-                        postTabRefreshEvent(bottomBarItem, position, channelCode); //发送下拉刷新的事件
+            if (position == 0 || position == 1) {
+                //如果点击的是首页
+                if (mBottomBarLayout.getCurrentItem() == position) {
+                    //如果当前页码和点击的页码一致,进行下拉刷新
+                    String channelCode = "";
+                    if (position == 0) {
+                        channelCode = ((HomeFragment)mFragments.get(0)).getCurrentChannelCode();//获取到首页当前显示的fragment的频道
+                    } else {
+                        channelCode = ((VideoFragment)mFragments.get(1)).getCurrentChannelCode();//获取到视频当前显示的fragment的频道
                     }
-                    return;
+                    postTabRefreshEvent(bottomBarItem, position, channelCode); //发送下拉刷新的事件
                 }
-
-                //如果点击了其他条目
-                BottomBarItem bottomItem = mBottomBarLayout.getBottomItem(0);
-                bottomItem.setIconSelectedResourceId(R.mipmap.tab_home_selected);//更换为原来的图标
-
-                cancelTabLoading(bottomItem);//停止旋转动画
+                return;
             }
+
+            //如果点击了其他条目
+            BottomBarItem bottomItem = mBottomBarLayout.getBottomItem(0);
+            bottomItem.setIconSelectedResourceId(R.mipmap.tab_home_selected);//更换为原来的图标
+
+            cancelTabLoading(bottomItem);//停止旋转动画
         });
     }
 

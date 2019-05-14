@@ -1,7 +1,11 @@
 package com.cgy.news.module.micro;
 
+import android.view.View;
+
+import com.cgy.news.R;
 import com.cgy.news.base.BaseFragment;
 import com.cgy.news.base.BasePresenter;
+import com.socks.library.KLog;
 
 /**
  * @author cgy
@@ -16,11 +20,26 @@ public class MicroFragment extends BaseFragment {
 
     @Override
     protected int provideContentViewId() {
-        return 0;
+        return R.layout.fragment_micro;
     }
 
     @Override
-    protected void loadData() {
+    public void initView(View rootView) {
+        KLog.i("initView");
+    }
 
+    @Override
+    public void initData() {
+        KLog.i("initData");
+    }
+
+    @Override
+    public void initListener() {
+        KLog.i("initListener");
+    }
+
+    @Override
+    public void loadData() {
+        KLog.i("loadData");
     }
 }

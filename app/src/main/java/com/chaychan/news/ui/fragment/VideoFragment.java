@@ -40,7 +40,7 @@ public class VideoFragment extends BaseFragment {
     ViewPager mVpContent;
 
     private List<Channel> mChannelList = new ArrayList<>();
-    private List<NewsListFragment> mFrgamentList = new ArrayList<>();
+    private List<NewsListFragment> mFragmentList = new ArrayList<>();
 
     @Override
     protected BasePresenter createPresenter() {
@@ -78,24 +78,24 @@ public class VideoFragment extends BaseFragment {
             NewsListFragment newsFragment = new NewsListFragment();
             Bundle bundle = new Bundle();
             bundle.putString(Constant.CHANNEL_CODE, channel.channelCode);
-            bundle.putBoolean(Constant.IS_VIDEO_LIST, true);//是否是视频列表页面,]true
+            bundle.putBoolean(Constant.IS_VIDEO_LIST, true);//是否是视频列表页面, true
             newsFragment.setArguments(bundle);
-            mFrgamentList.add(newsFragment);//添加到集合中
+            mFragmentList.add(newsFragment);//添加到集合中
         }
     }
 
     @Override
     public void initListener() {
-        ChannelPagerAdapter channelPagerAdapter = new ChannelPagerAdapter(mFrgamentList, mChannelList,getChildFragmentManager());
+        ChannelPagerAdapter channelPagerAdapter = new ChannelPagerAdapter(mFragmentList, mChannelList,getChildFragmentManager());
         mVpContent.setAdapter(channelPagerAdapter);
-        mVpContent.setOffscreenPageLimit(mFrgamentList.size());
+        mVpContent.setOffscreenPageLimit(mFragmentList.size());
 
         mTabChannel.setTabPaddingLeftAndRight(UIUtils.dip2Px(10), UIUtils.dip2Px(10));
         mTabChannel.setupWithViewPager(mVpContent);
         mTabChannel.post(new Runnable() {
             @Override
             public void run() {
-                //设置最小宽度，使其可以在滑动一部分距离
+                //设置最小宽度，使其可以再滑动一部分距离
                 ViewGroup slidingTabStrip = (ViewGroup) mTabChannel.getChildAt(0);
                 slidingTabStrip.setMinimumWidth(slidingTabStrip.getMeasuredWidth() + mIvOperation.getMeasuredWidth());
             }

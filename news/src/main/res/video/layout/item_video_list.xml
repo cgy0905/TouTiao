@@ -8,7 +8,7 @@
         android:layout_width="match_parent"
         android:layout_height="200dp">
 
-        <com.cgy.news.utils.MyJZVideoPlayerStandard
+        <com.cgy.news.widget.MyJZVideoPlayerStandard
             android:id="@+id/video_player"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />

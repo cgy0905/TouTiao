@@ -7,7 +7,7 @@ import com.cgy.news.R;
 import com.cgy.news.listener.VideoStateListenerAdapter;
 import com.cgy.news.model.entity.News;
 import com.cgy.news.utils.GlideUtils;
-import com.cgy.news.utils.MyJZVideoPlayerStandard;
+import com.cgy.news.widget.MyJZVideoPlayerStandard;
 import com.cgy.news.utils.TimeUtils;
 import com.cgy.news.utils.UIUtils;
 import com.cgy.news.utils.VideoPathDecoder;

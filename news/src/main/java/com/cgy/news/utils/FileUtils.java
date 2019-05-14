@@ -1,4 +1,4 @@
-package com.chaychan.news.utils;
+package com.cgy.news.utils;
 
 import android.app.Activity;
 import android.content.ContentValues;
@@ -21,10 +21,14 @@ import java.io.IOException;
 import java.nio.channels.FileChannel;
 import java.util.HashMap;
 
+/**
+ * @author cgy
+ * @description
+ * @date 2019/5/14 10:59
+ */
 public class FileUtils {
 
-    public static final String ROOT_DIR = "Android/data/"
-            + UIUtils.getPackageName();
+    public static final String ROOT_DIR = "Android/data/" + UIUtils.getPackageName();
     public static final String DOWNLOAD_DIR = "download";
     public static final String CACHE_DIR = "cache";
     public static final String ICON_DIR = "icon";
@@ -35,8 +39,7 @@ public class FileUtils {
      * 判断SD卡是否挂载
      */
     public static boolean isSDCardAvailable() {
-        if (Environment.MEDIA_MOUNTED.equals(Environment
-                .getExternalStorageState())) {
+        if (Environment.MEDIA_MOUNTED.equals(Environment.getExternalStorageState())) {
             return true;
         } else {
             return false;
@@ -65,7 +68,7 @@ public class FileUtils {
     }
 
     /**
-     * 获取应用目录，当SD卡存在时，获取SD卡上的目录，当SD卡不存在时，获取应用的cache目录
+     * 获取应用目录, 当SD卡存在时, 获取SD卡上的目录, 当SD卡不存在时,获取应用的cache目录
      */
     public static String getDir(String name) {
         StringBuilder sb = new StringBuilder();
@@ -81,6 +84,7 @@ public class FileUtils {
             return path;
         } else {
             return null;
+
         }
     }
 
@@ -132,17 +136,18 @@ public class FileUtils {
     }
 
     /**
-     * 产生图片的路径，这里是在缓存目录下
+     * 产生图片的路径,这里是在缓存目录下
      */
     public static String generateImagePathInStoragePath() {
-        return getDir(ICON_DIR) + String.valueOf(System.currentTimeMillis()) + ".jpg";
+        return getDir(ICON_DIR) + String.valueOf(System.currentTimeMillis() + ".jpg");
     }
 
+
     /**
-     * 发起剪裁图片的请求
+     * 发起裁剪图片的请求
      *
      * @param activity    上下文
-     * @param srcFile     原文件的File
+     * @param srcFile     原文件的file
      * @param output      输出文件的File
      * @param requestCode 请求码
      */
@@ -159,15 +164,10 @@ public class FileUtils {
         // outputX,outputY 是剪裁图片的宽高
         intent.putExtra("outputX", 800);
         intent.putExtra("outputY", 480);
-        // intent.putExtra("return-data", false);
 
-        //        intent.putExtra(MediaStore.EXTRA_OUTPUT,
-        //                Uri.fromFile(new File(FileUtils.picPath)));
-
-        intent.putExtra("return-data", false);// true:不返回uri，false：返回uri
+        intent.putExtra("return-data", false);//true:不返回uri, false:返回uri
         intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(output));
         intent.putExtra("outputFormat", Bitmap.CompressFormat.JPEG.toString());
-        // intent.putExtra("noFaceDetection", true); // no face detection
 
         activity.startActivityForResult(intent, requestCode);
     }
@@ -184,30 +184,28 @@ public class FileUtils {
                 new String[]{filePath}, null);
 
         if (cursor != null && cursor.moveToFirst()) {
-            int id = cursor.getInt(cursor
-                    .getColumnIndex(MediaStore.MediaColumns._ID));
+            int id = cursor.getInt(cursor.getColumnIndex(MediaStore.MediaColumns._ID));
             Uri baseUri = Uri.parse("content://media/external/images/media");
             return Uri.withAppendedPath(baseUri, "" + id);
         } else {
             if (imageFile.exists()) {
                 ContentValues values = new ContentValues();
                 values.put(MediaStore.Images.Media.DATA, filePath);
-                return context.getContentResolver().insert(
-                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
+                return context.getContentResolver().insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values);
             } else {
                 return null;
             }
         }
     }
 
-    /**
-     * 复制bm
-     *
-     * @param bm
+    /***
+     * 赋值bitmap
+     * @param bitmap
      * @return
      */
-    public static String saveBitmap(Bitmap bm) {
+    public static String saveBitmap(Bitmap bitmap) {
         String croppath = "";
+        FileOutputStream fos = null;
         try {
             File f = new File(FileUtils.generateImagePathInStoragePath());
             //得到相机图片存到本地的图片
@@ -215,26 +213,33 @@ public class FileUtils {
             if (f.exists()) {
                 f.delete();
             }
-            FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.JPEG, 100, out);
-            out.flush();
-            out.close();
+            fos = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, 100, fos);
+            fos.flush();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } finally {
+            try {
+                if (fos != null) {
+                    fos.close();
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+
         }
         return croppath;
     }
 
     /**
-     * 按质量压缩bm
-     *
-     * @param bm
-     * @param quality 压缩率
+     * 按质量压缩bimap
+     * @param bitmap
+     * @param quality   压缩率
      * @return
      */
-    public static String saveBitmapByQuality(Bitmap bm, int quality) {
+    public static String saveBitmapByQuality(Bitmap bitmap, int quality) {
         String croppath = "";
         try {
             File f = new File(FileUtils.generateImagePathInStoragePath());
@@ -243,10 +248,10 @@ public class FileUtils {
             if (f.exists()) {
                 f.delete();
             }
-            FileOutputStream out = new FileOutputStream(f);
-            bm.compress(Bitmap.CompressFormat.JPEG, quality, out);
-            out.flush();
-            out.close();
+            FileOutputStream fos = new FileOutputStream(f);
+            bitmap.compress(Bitmap.CompressFormat.JPEG, quality, fos);
+            fos.flush();
+            fos.close();
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
@@ -256,13 +261,13 @@ public class FileUtils {
     }
 
     public static void copy(File src, File dst) throws IOException {
-        FileInputStream inStream = new FileInputStream(src);
-        FileOutputStream outStream = new FileOutputStream(dst);
-        FileChannel inChannel = inStream.getChannel();
-        FileChannel outChannel = outStream.getChannel();
+        FileInputStream fis = new FileInputStream(src);
+        FileOutputStream fos = new FileOutputStream(dst);
+        FileChannel inChannel = fis.getChannel();
+        FileChannel outChannel = fos.getChannel();
         inChannel.transferTo(0L, inChannel.size(), outChannel);
-        inStream.close();
-        outStream.close();
+        fis.close();
+        fos.close();
     }
 
     /**
@@ -272,7 +277,7 @@ public class FileUtils {
      * @return
      */
     public static String getImageFileExt(String filePath) {
-        HashMap<String, String> mFileTypes = new HashMap<String, String>();
+        HashMap<String, String> mFileTypes = new HashMap<>();
         mFileTypes.put("FFD8FF", ".jpg");
         mFileTypes.put("89504E47", ".png");
         mFileTypes.put("474946", ".gif");
@@ -287,24 +292,25 @@ public class FileUtils {
 
     /**
      * 获取文件头信息
-     *
      * @param filePath
      * @return
      */
     public static String getFileHeader(String filePath) {
-        FileInputStream is = null;
+        FileInputStream fis = null;
         String value = null;
         try {
-            is = new FileInputStream(filePath);
+            fis = new FileInputStream(filePath);
             byte[] b = new byte[3];
-            is.read(b, 0, b.length);
+            fis.read(b, 0, b.length);
             value = bytesToHexString(b);
         } catch (Exception e) {
+
         } finally {
-            if (null != is) {
+            if (null != fis) {
                 try {
-                    is.close();
+                    fis.close();
                 } catch (IOException e) {
+                    e.printStackTrace();
                 }
             }
         }
@@ -313,12 +319,11 @@ public class FileUtils {
 
     /**
      * 将byte字节转换为十六进制字符串
-     *
      * @param src
      * @return
      */
     private static String bytesToHexString(byte[] src) {
-        StringBuilder builder = new StringBuilder();
+        StringBuilder sb = new StringBuilder();
         if (src == null || src.length <= 0) {
             return null;
         }
@@ -326,12 +331,13 @@ public class FileUtils {
         for (int i = 0; i < src.length; i++) {
             hv = Integer.toHexString(src[i] & 0xFF).toUpperCase();
             if (hv.length() < 2) {
-                builder.append(0);
+                sb.append(0);
             }
-            builder.append(hv);
+            sb.append(hv);
         }
-        String header = builder.toString();
-        KLog.i("file header:" + header);
+        String header = sb.toString();
+        KLog.i("file header: " + header);
         return header;
     }
+
 }
