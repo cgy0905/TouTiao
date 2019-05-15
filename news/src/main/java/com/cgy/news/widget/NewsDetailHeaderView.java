@@ -122,10 +122,10 @@ public class NewsDetailHeaderView extends FrameLayout {
                 "var img = imgs[i];"+
                 "imgList = imgList + img.src +\";\";"+
                 "img.onclick = function(){"+
-                "window.chaychan.openImg(this.src);"+
+                "window.cgy.openImg(this.src);"+
                 "}"+
                 "}"+
-                "window.chaychan.getImgArray(imgList);"+
+                "window.cgy.getImgArray(imgList);"+
                 "})()");
     }
 

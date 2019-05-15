@@ -19,9 +19,9 @@ import rx.Observable;
  * 网络请求的service
  */
 public interface ApiService {
+
     String GET_ARTICLE_LIST = "api/news/feed/v62/?refer=1&count=20&loc_mode=4&device_id=34960436458&iid=13136511752";
     String GET_COMMENT_LIST = "article/v2/tab_comments/";
-
     /**
      * 获取新闻列表
      *
@@ -33,14 +33,13 @@ public interface ApiService {
 
     /**
      * 获取新闻详情
-     * @param url
-     * @return
      */
     @GET
     Observable<ResultResponse<NewsDetail>> getNewsDetail(@Url String url);
 
     /**
      * 获取评论列表数据
+     *
      * @param groupId
      * @param itemId
      * @param offset
@@ -49,6 +48,7 @@ public interface ApiService {
      */
     @GET(GET_COMMENT_LIST)
     Observable<CommentResponse> getComment(@Query("group_id") String groupId, @Query("item_id") String itemId, @Query("offset") String offset, @Query("count") String count);
+
     /**
      * 获取视频页的html代码
      */
@@ -71,5 +71,5 @@ public interface ApiService {
     })
 
     @POST("https://www.parsevideo.com/api.php")
-    Observable<VideoPathResponse> parseVideo(@Query("url") String url, @Query("hash")String hash);
+    Observable<VideoPathResponse> parseVideo(@Query("url") String url,@Query("hash")String hash);
 }
