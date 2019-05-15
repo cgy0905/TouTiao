@@ -12,11 +12,9 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.Cache;
 import okhttp3.CacheControl;
 import okhttp3.Interceptor;
-import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -34,26 +32,27 @@ public class ApiRetrofit {
 
     //缓存配置
     private Interceptor mCacheInterceptor = chain -> {
+
         CacheControl.Builder cacheBuilder = new CacheControl.Builder();
         cacheBuilder.maxAge(0, TimeUnit.SECONDS);
         cacheBuilder.maxStale(365, TimeUnit.DAYS);
         CacheControl cacheControl = cacheBuilder.build();
 
         Request request = chain.request();
-        if (NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
+        if (!NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
             request = request.newBuilder()
                     .cacheControl(cacheControl)
                     .build();
         }
         Response originalResponse = chain.proceed(request);
-        if (!NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
-            int maxAge = 0;//read from cache
+        if (NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
+            int maxAge = 0; // read from cache
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .header("Cache-Control", "public ,max-age=" + maxAge)
                     .build();
         } else {
-            int maxStale = 60 * 60 * 24 * 28; //tolerate 4-weeks stale
+            int maxStale = 60 * 60 * 24 * 28; // tolerate 4-weeks stale
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
                     .header("Cache-Control", "public, only-if-cached, max-stale=" + maxStale)
@@ -61,21 +60,21 @@ public class ApiRetrofit {
         }
     };
 
-    /**请求访问request和response拦截器*/
+    /**请求访问quest和response拦截器*/
     private Interceptor mLogInterceptor = chain -> {
         Request request = chain.request();
         long startTime = System.currentTimeMillis();
-        Response response = chain.proceed(chain.request());
+        okhttp3.Response response = chain.proceed(chain.request());
         long endTime = System.currentTimeMillis();
         long duration = endTime - startTime;
-        MediaType mediaType = response.body().contentType();
-        String content = response.body().toString();
+        okhttp3.MediaType mediaType = response.body().contentType();
+        String content = response.body().string();
         KLog.e("----------Request Start----------------");
         KLog.e("| " + request.toString());
         KLog.json("| Response:" + content);
         KLog.e("----------Request End:" + duration + "毫秒----------");
         return response.newBuilder()
-                .body(ResponseBody.create(mediaType, content))
+                .body(okhttp3.ResponseBody.create(mediaType, content))
                 .build();
     };
 
@@ -88,8 +87,8 @@ public class ApiRetrofit {
         builder.addHeader("X-Requested-With", "XMLHttpRequest");
         builder.addHeader("Cookie", "uuid=\"w:f2e0e469165542f8a3960f67cb354026\"; __tasessionId=4p6q77g6q1479458262778; csrftoken=7de2dd812d513441f85cf8272f015ce5; tt_webid=36385357187");
         return chain.proceed(builder.build());
-
     };
+
 
     public ApiRetrofit() {
         //cache url
@@ -99,6 +98,7 @@ public class ApiRetrofit {
 
         //        HttpLoggingInterceptor loggingInterceptor = new HttpLoggingInterceptor(HttpLoggingInterceptor.Logger.DEFAULT);
         //        loggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);//请求/响应行 + 头 + 体
+
         mClient = new OkHttpClient.Builder()
                 .addInterceptor(mHeaderInterceptor)//添加头部信息拦截器
                 .addInterceptor(mLogInterceptor)//添加log拦截器
@@ -114,8 +114,8 @@ public class ApiRetrofit {
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())//支持RxJava
                 .client(mClient)
                 .build();
-        mApiService = mRetrofit.create(ApiService.class);
 
+        mApiService = mRetrofit.create(ApiService.class);
     }
 
     public static ApiRetrofit getInstance() {
@@ -128,6 +128,7 @@ public class ApiRetrofit {
         }
         return mApiRetrofit;
     }
+
     public ApiService getApiService() {
         return mApiService;
     }

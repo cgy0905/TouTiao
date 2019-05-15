@@ -160,6 +160,7 @@ public class MyJZVideoPlayerStandard extends JzvdStd {
     public VideoStateListener getListener() {
         return mListener;
     }
+
     public void setVideoStateListener(VideoStateListener listener) {
         mListener = listener;
     }

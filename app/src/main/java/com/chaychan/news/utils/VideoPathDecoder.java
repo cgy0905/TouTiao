@@ -46,7 +46,7 @@ public abstract class VideoPathDecoder {
                             KLog.e(TAG,"r: " + r);
                             CRC32 crc32 = new CRC32();
                             String s = String.format(ApiConstant.URL_VIDEO, videoId, r);
-                            //进行crc32加密。
+                            //进行crc32加密
                             crc32.update(s.getBytes());
                             String crcString = crc32.getValue() + "";
                             //2.访问http://i.snssdk.com/video/urls/v/1/toutiao/mp4/{videoid}?r={Math.random()}&s={crc32值}

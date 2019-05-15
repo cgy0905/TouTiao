@@ -34,5 +34,5 @@ function getS(a) {
 function getParseParam(link){
 	var r = getR();
 	var s = getS(link + "@" + r).toString(10);
-	window.chaychan.onReceiveParams(r,s);
+	window.cgy.onReceiveParams(r,s);
 }
