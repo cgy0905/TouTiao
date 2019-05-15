@@ -46,7 +46,7 @@ public class ApiRetrofit {
                     .build();
         }
         Response originalResponse = chain.proceed(request);
-        if (NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
+        if (!NetWorkUtils.isNetworkAvailable(MyApp.getContext())) {
             int maxAge = 0;//read from cache
             return originalResponse.newBuilder()
                     .removeHeader("Pragma")
@@ -79,6 +79,7 @@ public class ApiRetrofit {
                 .build();
     };
 
+    /**增加头部信息的拦截器*/
     private Interceptor mHeaderInterceptor = chain -> {
         Request.Builder builder = chain.request().newBuilder();
         builder.addHeader("User-Agent", "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/47.0.2526.108 Safari/537.36 2345Explorer/8.0.0.13547");

@@ -19,15 +19,18 @@ import rx.Observable;
  * 网络请求的service
  */
 public interface ApiService {
+
     String GET_ARTICLE_LIST = "api/news/feed/v62/?refer=1&count=20&loc_mode=4&device_id=34960436458&iid=13136511752";
     String GET_COMMENT_LIST = "article/v2/tab_comments/";
-
+    //http://is.snssdk.com
+    //http://is.snssdk.com/api/news/feed/v54/?refer=1&count=20&min_behot_time=1498722625&last_refresh_sub_entrance_interval=1498724693&loc_mode=4&tt_from=pull（tab_tip） 新闻列表
+    //http://is.snssdk.com/article/v2/tab_comments/?group_id=6436886053704958466&item_id=6436886053704958466&offset=30&count=20 评论
+    //http://is.snssdk.com/2/article/information/v21/ 详情
 
     /**
      * 获取新闻列表
-     * @param category  频道
-     * @param lastTime
-     * @param currentTime
+     *
+     * @param category 频道
      * @return
      */
     @GET(GET_ARTICLE_LIST)
@@ -35,14 +38,13 @@ public interface ApiService {
 
     /**
      * 获取新闻详情
-     * @param url
-     * @return
      */
     @GET
     Observable<ResultResponse<NewsDetail>> getNewsDetail(@Url String url);
 
     /**
      * 获取评论列表数据
+     *
      * @param groupId
      * @param itemId
      * @param offset
@@ -51,6 +53,7 @@ public interface ApiService {
      */
     @GET(GET_COMMENT_LIST)
     Observable<CommentResponse> getComment(@Query("group_id") String groupId, @Query("item_id") String itemId, @Query("offset") String offset, @Query("count") String count);
+
     /**
      * 获取视频页的html代码
      */
@@ -73,5 +76,5 @@ public interface ApiService {
     })
 
     @POST("https://www.parsevideo.com/api.php")
-    Observable<VideoPathResponse> parseVideo(@Query("url") String url, @Query("hash")String hash);
+    Observable<VideoPathResponse> parseVideo(@Query("url") String url,@Query("hash")String hash);
 }

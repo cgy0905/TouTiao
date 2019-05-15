@@ -224,11 +224,11 @@ public class HomeFragment extends BaseFragment implements OnChannelListener {
         mChannelFragments.remove(starPos);
     }
 
-    private void listMove(List datas, int starPos, int endPos) {
-        Object o = datas.get(starPos);
+    private void listMove(List data, int starPos, int endPos) {
+        Object o = data.get(starPos);
         //先删除之前的位置
-        datas.remove(starPos);
+        data.remove(starPos);
         //添加到现在的位置
-        datas.add(endPos, o);
+        data.add(endPos, o);
     }
 }

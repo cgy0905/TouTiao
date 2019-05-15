@@ -179,6 +179,7 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
                     intent = new Intent(mActivity, WebViewActivity.class);
                     intent.putExtra(WebViewActivity.URL, news.article_url);
                     startActivity(intent);
+                    return;
                 }
                 //其他新闻
                 intent = new Intent(mActivity, NewsDetailActivity.class);
@@ -197,6 +198,7 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
 
         mNewsAdapter.setEnableLoadMore(true);
         mNewsAdapter.setOnLoadMoreListener(this, mRvNews);
+
         if (isVideoList) {
             //如果是视频列表,监听滚动
             mRvNews.addOnChildAttachStateChangeListener(new RecyclerView.OnChildAttachStateChangeListener() {
@@ -310,7 +312,7 @@ public class NewsListFragment extends BaseFragment<NewsListPresenter> implements
 
         if (ListUtils.isEmpty(mNewsList)) {
             //如果一开始进入没有数据
-            mStateView.showEmpty();//显示重试的布局
+            mStateView.showRetry();//显示重试的布局
         }
 
         //收起刷新
